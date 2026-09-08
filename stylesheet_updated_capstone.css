@@ -1,0 +1,247 @@
+@layer reset, base, layout, components, utilities, states, overrides;
+
+@layer reset {
+  /* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+}
+
+@layer base {
+  /* Base styles */
+:root {
+    --color-primary: #93B7BE;
+    --color-secondary: #785964;
+    --color-background: #D5C7BC;
+    --color-text: #454545;
+    --color-border: #F1FFFA;
+
+    /* Font */
+    --font-body: 'Helvetica Neue', Arial, sans-serif;
+    --font-heading: 'Georgia', serif;
+    --font-size-base: 16px;
+
+    /* Spacing */
+    --spacing-xs: 8px;
+    --spacing-sm: 16px;
+    --spacing-md: 24px;
+    --spacing-lg: 32px;
+    --spacing-xl: 48px;
+    --spacing-xxl: 64px;
+
+    /* Border radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+
+    /* Focus styles */
+    --focus: 3px solid var(--color-secondary);
+}
+}
+
+
+/* Layout styles */
+
+@layer layout {
+
+    .container {
+        inline-size: min(100% - 2rem, 75rem);
+        margin-inline: auto;
+        padding-inline: var(--spacing-md);
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        padding-block: var(--spacing-lg);
+    }
+
+    .hero-content {
+        display: flex;
+    }
+
+    .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+        gap: var(--spacing-lg);
+    }
+
+    .project-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+        gap: var(--spacing-md);
+    }
+    
+    /* Content-driven breakpoint: At this width, the .hero-content begins to become cramped, so it is allowed to wrap. */
+    @media (max-width: 66rem) {
+        .hero-content {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+
+/* Component styles */
+
+@layer components {
+
+    .site-nav {
+        display: flex;
+        gap: var(--spacing-md);
+    }
+
+    .project-card {
+        --card-padding: var(--spacing-md);
+        --card-border-radius: var(--border-radius-md);
+
+        padding: var(--card-padding);
+        border-radius: var(--card-border-radius);
+        border: 1px solid var(--color-border);
+        background: var(--color-background);
+    }
+
+    @supports (container-type: inline-size) {
+        .project-card {
+            container-type: inline-size;
+        }
+
+        @container (min-width: 35rem) {
+            .project-card {
+                display: grid;
+                grid-template-columns: 1fr 2fr;
+                gap: var(--spacing-md);
+                align-items: center;
+            }
+        }
+    }
+
+    .button {
+        display: inline-block;
+        padding: var(--spacing-sm) var(--spacing-md);
+        border-radius: var(--border-radius-sm);
+        background-color: var(--color-primary);
+        color: var(--color-secondary);
+        text-decoration: none;
+    }
+
+    .intro {
+        padding: var(--spacing-lg);
+        background-color: var(--color-background);
+    }
+
+    .contact-form {
+        padding: var(--spacing-md);
+        border: 1px solid var(--color-border);
+    }
+
+    .site-footer {
+        padding: var(--spacing-lg);
+        background-color: var(--color-primary);
+        color: var(--color-background);
+    }
+}
+
+
+
+/* Utility classes */
+@layer utilities {
+    .text-center {
+        text-align: center;
+    }
+
+    .flow {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+
+    .hidden {
+        display: none;
+    }
+}
+
+
+
+/* State styles */
+@layer states {
+    .button:hover {
+        background-color: var(--color-secondary);
+        color: var(--color-background);
+    }
+
+    a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
+        outline: var(--focus);
+    }
+
+    .site-nav a[aria-current="page"] {
+        font-weight: bold;
+        color: var(--color-secondary);
+    }
+
+    .button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            scroll-behavior: auto;
+            transition-duration: 0.01ms;
+            animation-duration: 0.01ms;
+            animation-iteration-count: 1;
+        }
+    }
+}
+
+
+
+/* Override styles */
+@layer overrides {
+
+}
+
+@media print {
+    body {
+        background-color: white;
+        color: black;
+    }
+
+    a {
+        text-decoration: underline;
+        color: black;
+    }
+    
+    .site-nav, .site-footer, .button {
+        display: none;
+    }
+}
+
+
+
+
+
+/* REFACTORING EVIDENCE 
+
+Before: There was repeated spacing and color values that were going to be used in the style sheet
+After: Custom properties were created in the :root selector to store the values for spacing and color, which were then used throughout the style sheet to maintain consistency and make future changes easier.
+
+Before: Component styles could require more specific selectors to override global styles, leading to increased specificity and potential conflicts.
+After: Cascade layer and simple class selectors were used to reduce specificity and make it easier to override styles when necessary.
+
+Before: Card values were mixed with global values, making it difficult to maintain consistency and update styles.
+After: Component specific properties such as card --card-padding and --card-border-radius were scoped inside the .project-card selector to ensure that they only apply to the card component and do not affect other elements on the page.
+*/
+
+
+
+/* ARCHITECTURE NOTES
+
+The style sheet uses cascade layers in the order of reset, base, layout, components, utilities, states, and overrides. This keeps the styles organized and allows for easier maintenance and overrides. Custom properties in :root stores reusable values for colors, spacing, and other design tokens, ensuring consistency across the site. Component-specific properties are scoped to their respective selectors to avoid conflicts and maintain modularity. Media queries are used for print styles to ensure a clean output when printing the page. Browser checks were performed at different screen sizes to ensure responsiveness and accessibility so far. The index.html used is from a previous assignment to simply to test the styles and ensure that they are working as expected. Hover, keyboard focus, and disabled states were also tested as well as a print check to ensure that the styles were applied correctly. 
+
+Subgrid was considered for the project cards, but it is not needed for the current layout because the cards do not require shared row or column layout tracks across separate grid items. The intrinsic grid and container query provide the alignment and responsiveness needed for the current portfolio layout.
+*/
