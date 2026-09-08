@@ -59,7 +59,7 @@
     }
 
     .hero-content {
-        display: flex;
+        display: block;
     }
 
     .projects-grid {
@@ -77,6 +77,7 @@
     /* Content-driven breakpoint: At this width, the .hero-content begins to become cramped, so it is allowed to wrap. */
     @media (max-width: 66rem) {
         .hero-content {
+            display: flex;
             flex-wrap: wrap;
         }
     }
