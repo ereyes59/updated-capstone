@@ -251,3 +251,8 @@ The style sheet uses cascade layers in the order of reset, base, layout, compone
 
 Subgrid was considered for the project cards, but it is not needed for the current layout because the cards do not require shared row or column layout tracks across separate grid items. The intrinsic grid and container query provide the alignment and responsiveness needed for the current portfolio layout.
 */
+
+/* Testing Evidence 
+
+9/13/26: The layout was tested at narrow, medium, and wide screen sizes to ensure the content reflows as intended and doesn't create any overflow causing users to scroll horizontally. Keyboard focus was tested and visible focus outlines were displayed properly. The same thing goes for the reduced motion and the fallback feature. All features are working properly as intended as of 9/13/26.
+*/
