@@ -250,9 +250,11 @@ After: Component specific properties such as card --card-padding and --card-bord
 The style sheet uses cascade layers in the order of reset, base, layout, components, utilities, states, and overrides. This keeps the styles organized and allows for easier maintenance and overrides. Custom properties in :root stores reusable values for colors, spacing, and other design tokens, ensuring consistency across the site. Component-specific properties are scoped to their respective selectors to avoid conflicts and maintain modularity. Media queries are used for print styles to ensure a clean output when printing the page. Browser checks were performed at different screen sizes to ensure responsiveness and accessibility so far. The index.html used is from a previous assignment to simply to test the styles and ensure that they are working as expected. Hover, keyboard focus, and disabled states were also tested as well as a print check to ensure that the styles were applied correctly. 
 
 Subgrid was considered for the project cards, but it is not needed for the current layout because the cards do not require shared row or column layout tracks across separate grid items. The intrinsic grid and container query provide the alignment and responsiveness needed for the current portfolio layout.
+
+As for the fallback feature, @supports (container-type: inline-size) {...}, the @support checks whether container queries are supported. If they are, the project card changes to a 2 column layout when its container reaches 35rem, and if they are not supported, the card remains a single column layout, so the content is still usable.
 */
 
 /* Testing Evidence 
 
-9/13/26: The layout was tested at narrow, medium, and wide screen sizes to ensure the content reflows as intended and doesn't create any overflow causing users to scroll horizontally. Keyboard focus was tested and visible focus outlines were displayed properly. The same thing goes for the reduced motion and the fallback feature. All features are working properly as intended as of 9/13/26.
+9/13/26: The layout was tested at narrow, medium, 200% zoom, and wide screen sizes to ensure the content reflows as intended and doesn't create any overflow causing users to scroll horizontally. Keyboard focus was tested and visible focus outlines were displayed properly. The same thing goes for the reduced motion and the fallback feature. All features are working properly as intended as of 9/13/26.
 */
